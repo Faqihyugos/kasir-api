@@ -36,7 +36,7 @@ func (repo *CategoryRepository) GetAll() ([]models.Category, error) {
 }
 
 func (repo *CategoryRepository) Create(category *models.Category) error {
-	query := "INSERT INTO categories (name, description) VALUES ($1, $2, $3) RETURNING id"
+	query := "INSERT INTO categories (name, description) VALUES ($1, $2) RETURNING id"
 	err := repo.db.QueryRow(query, category.Name, category.Description).Scan(&category.ID)
 	return err
 }
@@ -57,7 +57,7 @@ func (repo *CategoryRepository) GetByID(id int) (*models.Category, error) {
 }
 
 func (repo *CategoryRepository) Update(category *models.Category) error {
-	query := "UPDATE categories SET name = $1, description = $2, WHERE id = $4"
+	query := "UPDATE categories SET name = $1, description = $2 WHERE id = $3"
 	result, err := repo.db.Exec(query, category.Name, category.Description, category.ID)
 	if err != nil {
 		return err
