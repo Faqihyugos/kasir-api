@@ -51,8 +51,8 @@ func TestGetAllProducts(t *testing.T) {
 	handler := NewProductHandler(mockService)
 
 	expectedProducts := []models.Product{
-		{ID: 1, Name: "Product 1", Price: 10000, Stock: 50},
-		{ID: 2, Name: "Product 2", Price: 20000, Stock: 30},
+		{ID: 1, Name: "Product 1", Price: 10000, Stock: 50, CategoryID: 1, CategoryName: "Electronics"},
+		{ID: 2, Name: "Product 2", Price: 20000, Stock: 30, CategoryID: 2, CategoryName: "Furniture"},
 	}
 
 	mockService.On("GetAll").Return(expectedProducts, nil)
@@ -96,9 +96,10 @@ func TestCreateProduct(t *testing.T) {
 	handler := NewProductHandler(mockService)
 
 	newProduct := models.Product{
-		Name:  "New Product",
-		Price: 15000,
-		Stock: 100,
+		Name:       "New Product",
+		Price:      15000,
+		Stock:      100,
+		CategoryID: 1,
 	}
 
 	mockService.On("Create", mock.AnythingOfType("*models.Product")).Return(nil)
@@ -141,9 +142,10 @@ func TestCreateProduct_ServiceError(t *testing.T) {
 	handler := NewProductHandler(mockService)
 
 	newProduct := models.Product{
-		Name:  "New Product",
-		Price: 15000,
-		Stock: 100,
+		Name:       "New Product",
+		Price:      15000,
+		Stock:      100,
+		CategoryID: 1,
 	}
 
 	mockService.On("Create", mock.AnythingOfType("*models.Product")).Return(errors.New("validation error"))
@@ -165,10 +167,12 @@ func TestGetProductByID(t *testing.T) {
 	handler := NewProductHandler(mockService)
 
 	expectedProduct := &models.Product{
-		ID:    1,
-		Name:  "Product 1",
-		Price: 10000,
-		Stock: 50,
+		ID:           1,
+		Name:         "Product 1",
+		Price:        10000,
+		Stock:        50,
+		CategoryID:   1,
+		CategoryName: "Electronics",
 	}
 
 	mockService.On("GetByID", 1).Return(expectedProduct, nil)
@@ -224,10 +228,11 @@ func TestUpdateProduct(t *testing.T) {
 	handler := NewProductHandler(mockService)
 
 	updatedProduct := models.Product{
-		ID:    1,
-		Name:  "Updated Product",
-		Price: 25000,
-		Stock: 75,
+		ID:         1,
+		Name:       "Updated Product",
+		Price:      25000,
+		Stock:      75,
+		CategoryID: 2,
 	}
 
 	mockService.On("Update", mock.AnythingOfType("*models.Product")).Return(nil)
@@ -249,9 +254,10 @@ func TestUpdateProduct_InvalidID(t *testing.T) {
 	handler := NewProductHandler(mockService)
 
 	updatedProduct := models.Product{
-		Name:  "Updated Product",
-		Price: 25000,
-		Stock: 75,
+		Name:       "Updated Product",
+		Price:      25000,
+		Stock:      75,
+		CategoryID: 2,
 	}
 
 	body, _ := json.Marshal(updatedProduct)
@@ -284,10 +290,11 @@ func TestUpdateProduct_ServiceError(t *testing.T) {
 	handler := NewProductHandler(mockService)
 
 	updatedProduct := models.Product{
-		ID:    1,
-		Name:  "Updated Product",
-		Price: 25000,
-		Stock: 75,
+		ID:         1,
+		Name:       "Updated Product",
+		Price:      25000,
+		Stock:      75,
+		CategoryID: 2,
 	}
 
 	mockService.On("Update", mock.AnythingOfType("*models.Product")).Return(errors.New("update failed"))

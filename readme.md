@@ -35,6 +35,56 @@ go build -o kasir-api main.go
 
 API dapat diakses melalui endpoint yang tersedia. Dokumentasi endpoint dapat dilihat pada file dokumentasi atau menggunakan tools seperti Postman.
 
+### API Endpoints
+
+#### Products
+- `GET /api/produk` - Get all products (includes category name)
+- `GET /api/produk/{id}` - Get product by ID (includes category name)
+- `POST /api/produk` - Create new product
+- `PUT /api/produk/{id}` - Update product
+- `DELETE /api/produk/{id}` - Delete product
+
+#### Categories
+- `GET /api/kategori` - Get all categories
+- `GET /api/kategori/{id}` - Get category by ID
+- `POST /api/kategori` - Create new category
+- `PUT /api/kategori/{id}` - Update category
+- `DELETE /api/kategori/{id}` - Delete category
+
+### Example Product Response
+
+```json
+{
+  "id": 1,
+  "name": "Laptop Dell XPS",
+  "price": 15000000,
+  "stock": 10,
+  "category_id": 1,
+  "category_name": "Electronics"
+}
+```
+
+## Testing
+
+Jalankan unit tests untuk semua handlers:
+
+```bash
+go test ./handlers/... -v
+```
+
+Jalankan tests dengan coverage report:
+
+```bash
+go test ./handlers/... -cover
+```
+
+Lihat detailed coverage:
+
+```bash
+go test ./handlers/... -coverprofile=coverage.out
+go tool cover -html=coverage.out
+```
+
 ## Kontribusi
 
 Pull request dan issue sangat diterima untuk pengembangan lebih lanjut.
