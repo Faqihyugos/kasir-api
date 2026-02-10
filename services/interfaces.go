@@ -4,7 +4,7 @@ import "kasir-api/models"
 
 // ProductServiceInterface defines the interface for product service operations
 type ProductServiceInterface interface {
-	GetAll() ([]models.Product, error)
+	GetAll(name string) ([]models.Product, error)
 	GetByID(id int) (*models.Product, error)
 	Create(product *models.Product) error
 	Update(product *models.Product) error
